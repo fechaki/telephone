@@ -5,17 +5,12 @@ import br.com.fechaki.telephone.exception.ErrorMessageType;
 import org.springframework.http.HttpStatus;
 
 public class TelephoneNotExistException extends BaseException {
-    public TelephoneNotExistException() {
-        super("ID do Telefone informado não existe");
-    }
-
-    @Override
-    public ErrorMessageType getErrorMessageType() {
-        return ErrorMessageType.ERROR;
-    }
-
-    @Override
-    public HttpStatus getHttpStatus() {
-        return HttpStatus.NOT_FOUND;
+    public TelephoneNotExistException(String id) {
+        super(
+            "Telefone Inexistente",
+            "ID do Telefone informado não existe (" + id + ")",
+            ErrorMessageType.ERROR,
+            HttpStatus.NOT_FOUND
+        );
     }
 }

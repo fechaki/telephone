@@ -2,12 +2,15 @@ package br.com.fechaki.telephone.v1.service.impl;
 
 import br.com.fechaki.telephone.exception.type.DuplicateTelephoneException;
 import br.com.fechaki.telephone.exception.type.TelephoneNotExistException;
+import br.com.fechaki.telephone.exception.type.TelephoneNotFoundException;
 import br.com.fechaki.telephone.repository.TelephoneRepository;
 import br.com.fechaki.telephone.v1.data.entity.TelephoneEntity;
 import br.com.fechaki.telephone.v1.service.TelephoneService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -15,32 +18,44 @@ public class TelephoneServiceImpl implements TelephoneService {
     private final TelephoneRepository repository;
 
     @Override
-    public Mono<TelephoneEntity> create(TelephoneEntity entity) {
-        return repository.save(entity)
-                .onErrorMap(_ -> new DuplicateTelephoneException());
+    public TelephoneEntity create(TelephoneEntity entity) {
+        try {
+            return repository.save(entity);
+        }
+        catch (DuplicateKeyException ex) {
+            throw new DuplicateTelephoneException(entity.getCountryCode(), entity.getAreaCode(), entity.getPhoneNumber());
+        }
     }
 
     @Override
-    public Mono<TelephoneEntity> read(String id) {
-        return repository.findFirstByTelephoneIdAndDeletedFalse(id);
+    public TelephoneEntity read(String id) {
+        TelephoneEntity entity = repository.findFirstByTelephoneIdAndDeletedFalse(UUID.fromString(id));
+        if(entity == null) {
+            throw new TelephoneNotFoundException(id);
+        }
+        return entity;
     }
 
     @Override
-    public Mono<TelephoneEntity> read(String countryCode, String areaCoda, String phoneNumber) {
-        return repository.findFirstByCountryCodeAndAreaCodeAndPhoneNumberAndDeletedFalse(countryCode, areaCoda, phoneNumber);
+    public TelephoneEntity read(String countryCode, String areaCode, String phoneNumber) {
+        TelephoneEntity entity = repository.findFirstByCountryCodeAndAreaCodeAndPhoneNumberAndDeletedFalse(countryCode, areaCode, phoneNumber);
+        if(entity == null) {
+            throw new TelephoneNotFoundException(countryCode + areaCode + phoneNumber);
+        }
+        return entity;
     }
 
     @Override
-    public Mono<Void> delete(String id) {
-        return repository
-                .existsById(id)
-                .flatMap(data -> {
-                    if(Boolean.TRUE.equals(data)) {
-                        return repository.deleteById(id);
-                    }
-                    else {
-                        return Mono.error(new TelephoneNotExistException());
-                    }
-                });
+    public void delete(String id) {
+        boolean result = repository.existsById(UUID.fromString(id));
+        if(!result) {
+            throw new TelephoneNotExistException(id);
+        }
+        try {
+            repository.deleteById(UUID.fromString(id));
+        }
+        catch (Exception ex) {
+            throw new TelephoneNotExistException(id);
+        }
     }
 }

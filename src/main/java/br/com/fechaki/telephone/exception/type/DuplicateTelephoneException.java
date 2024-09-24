@@ -6,17 +6,12 @@ import org.springframework.http.HttpStatus;
 
 public class DuplicateTelephoneException extends BaseException {
 
-    public DuplicateTelephoneException() {
-        super("Telefone Informado já Cadastrado");
-    }
-
-    @Override
-    public ErrorMessageType getErrorMessageType() {
-        return ErrorMessageType.ERROR;
-    }
-
-    @Override
-    public HttpStatus getHttpStatus() {
-        return HttpStatus.BAD_REQUEST;
+    public DuplicateTelephoneException(String countryCode, String areaCode, String phoneNumber) {
+        super(
+            "Telefone já Cadastrado",
+            "Telefone Informado (" + countryCode + areaCode + phoneNumber + ") já se encontra em uso",
+            ErrorMessageType.ERROR,
+            HttpStatus.BAD_REQUEST
+        );
     }
 }
