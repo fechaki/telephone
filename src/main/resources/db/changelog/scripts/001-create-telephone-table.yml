@@ -39,13 +39,13 @@ databaseChangeLog:
                   type: boolean
                   defaultValue: 0
                   constraints:
-                    nullable: false
+                    nullable: true
               - column:
                   name: deleted
                   type: boolean
                   defaultValue: 0
                   constraints:
-                    nullable: false
+                    nullable: true
               - column:
                   name: created
                   type: timestamp

@@ -1,10 +1,11 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.3.2'
+    id 'org.springframework.boot' version '3.3.4'
     id 'io.spring.dependency-management' version '1.1.6'
-    id 'org.hibernate.orm' version '6.5.2.Final'
-    id 'org.graalvm.buildtools.native' version '0.10.2'
+    id 'org.hibernate.orm' version '6.5.3.Final'
+    id 'org.graalvm.buildtools.native' version '0.10.3'
     id 'org.springframework.cloud.contract' version '4.1.4'
+    id 'com.gorylenko.gradle-git-properties' version '2.4.1'
 }
 
 group = 'br.com.fechaki'
@@ -28,45 +29,58 @@ repositories {
 
 ext {
     set('springCloudVersion', "2023.0.3")
+    set('mapstructVersion', "1.5.5.Final")
+    set('lombokMapstructBindingVersion', "0.2.0")
 }
 
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation "org.mapstruct:mapstruct:${mapstructVersion}"
     implementation 'org.liquibase:liquibase-core'
+
     compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
     developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
     runtimeOnly 'org.postgresql:postgresql'
+
+    annotationProcessor "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBindingVersion}"
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    testAnnotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
-    testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.testcontainers:postgresql'
+
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-    }
+
+gitProperties {
+    keys = [
+            'git.branch',
+            'git.commit.id',
+            'git.commit.user.email',
+            'git.commit.user.name',
+            'git.commit.time',
+            'git.build.version',
+            'git.tags'
+    ]
 }
 
-hibernate {
-    enhancement {
-        enableAssociationManagement = true
-    }
-}
-
-contracts {
-}
-
-tasks.named('contractTest') {
-    useJUnitPlatform()
+compileJava {
+    options.compilerArgs += [
+        '-Amapstruct.defaultComponentModel=default',
+        '-Amapstruct.unmappedTargetPolicy=IGNORE'
+    ]
 }
 
 tasks.named('test') {
