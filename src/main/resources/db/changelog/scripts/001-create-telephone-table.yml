@@ -1,0 +1,64 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-telephone-table
+      author: Rafael Bandeira
+      changes:
+        - createTable:
+            tableName: tbl_telephone
+            columns:
+              - column:
+                  name: telephone_id
+                  type: uuid
+                  defaultValueComputed: GEN_RANDOM_UUID()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: country_code
+                  type: varchar(3)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: area_code
+                  type: varchar(3)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone_number
+                  type: varchar(9)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: validated
+                  type: boolean
+                  defaultValue: 0
+                  constraints:
+                    nullable: true
+              - column:
+                  name: activated
+                  type: boolean
+                  defaultValue: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: deleted
+                  type: boolean
+                  defaultValue: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+        - addUniqueConstraint:
+            constraintName: cnt_unique_telephone
+            tableName: tbl_telephone
+            columnNames: country_code, area_code, phone_number
