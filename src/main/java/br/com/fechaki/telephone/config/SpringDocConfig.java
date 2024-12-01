@@ -48,16 +48,8 @@ public class SpringDocConfig {
                 .summary("Telephone API for Fechaki App")
                 .version(buildProperties.getVersion())
                 .termsOfService("https://fechaki.com.br/terms")
-                .license(new License().name("Apache 2.0").url("http://springdoc.org"));
+                .license(new License().name("Apache 2.0").url("https://springdoc.org"));
     }
-
-//    private Components getSecurityComponent() {
-//        SecurityScheme securityScheme = new SecurityScheme()
-//                .type(SecurityScheme.Type.HTTP)
-//                .scheme("bearer")
-//                .bearerFormat("JWT");
-//        return new Components().addSecuritySchemes("bearer-key", securityScheme);
-//    }
 
     @Bean
     public OpenAPI fechakiTelephoneOpenAPI() {
@@ -67,6 +59,5 @@ public class SpringDocConfig {
                 .info(info)
                 .servers(getServers())
                 .externalDocs(getExternalDocumentation());
-//                .components(getSecurityComponent());
     }
 }
