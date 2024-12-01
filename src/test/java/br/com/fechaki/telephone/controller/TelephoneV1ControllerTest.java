@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.aot.DisabledInAotMode;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.http.HttpEntity.EMPTY;
@@ -52,6 +53,7 @@ class TelephoneV1ControllerTest {
         assertEquals(201, response.getStatusCode().value());
         assertNull(response.getBody());
         assertNotNull(response.getHeaders().getLocation());
+        assertNotNull(response.getHeaders().get("Server"));
     }
 
     @Test
@@ -62,10 +64,11 @@ class TelephoneV1ControllerTest {
         assertNotNull(response);
         assertEquals(200, response.getStatusCode().value());
         assertTrue(response.hasBody());
-        assertNotNull(response.getBody().telephoneId());
+        assertNotNull(Objects.requireNonNull(response.getBody()).telephoneId());
         assertEquals("55", result.getCountryCode());
         assertEquals("21", result.getAreaCode());
         assertEquals("988888888", result.getPhoneNumber());
+        assertNotNull(response.getHeaders().get("Server"));
     }
 
     @Test
@@ -76,10 +79,11 @@ class TelephoneV1ControllerTest {
         assertNotNull(response);
         assertEquals(200, response.getStatusCode().value());
         assertTrue(response.hasBody());
-        assertNotNull(response.getBody().telephoneId());
+        assertNotNull(Objects.requireNonNull(response.getBody()).telephoneId());
         assertEquals("55", result.getCountryCode());
         assertEquals("21", result.getAreaCode());
         assertEquals("977777777", result.getPhoneNumber());
+        assertNotNull(response.getHeaders().get("Server"));
     }
 
     @Test
@@ -88,5 +92,6 @@ class TelephoneV1ControllerTest {
         TelephoneEntity result = service.create(request);
         ResponseEntity<Void> response = restTemplate.exchange(getHost(result.getTelephoneId().toString()), DELETE, EMPTY, Void.class);
         assertEquals(202, response.getStatusCode().value());
+        assertNotNull(response.getHeaders().get("Server"));
     }
 }
