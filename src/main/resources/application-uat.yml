@@ -1,0 +1,18 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,openapi,swagger-ui
+
+spring:
+  datasource:
+    password: ${TELEPHONE_DATASOURCE_PASSWORD_UAT}
+    url: ${TELEPHONE_DATASOURCE_URL_UAT}
+    username: ${TELEPHONE_DATASOURCE_USERNAME_UAT}
+
+springdoc:
+  api-docs:
+    path: /docs/api/v1/telephone
+  swagger-ui:
+    path: /docs/index.html
+  packages-to-scan: br.com.fechaki.telephone.controller

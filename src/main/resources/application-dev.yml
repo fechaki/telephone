@@ -1,0 +1,23 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,openapi,swagger-ui
+
+server:
+  port: 3700
+
+spring:
+  datasource:
+    password: ${TELEPHONE_DATASOURCE_PASSWORD}
+    url: ${TELEPHONE_DATASOURCE_URL}
+    username: ${TELEPHONE_DATASOURCE_USERNAME}
+  liquibase:
+    drop-first: true
+
+springdoc:
+  api-docs:
+    path: /docs/api/v1/telephone
+  swagger-ui:
+    path: /docs/index.html
+  packages-to-scan: br.com.fechaki.telephone.controller

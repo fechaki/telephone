@@ -2,14 +2,13 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,openapi,swagger-ui
+        include: health,info
   info:
     git:
       mode: full
       enabled: true
 
 server:
-  port: 3700
   shutdown: graceful
   server-header: "Fechaki Telephone API"
   netty:
@@ -19,12 +18,7 @@ server:
 spring:
   application:
     name: telephone
-  datasource:
-    password: ${TELEPHONE_DATASOURCE_PASSWORD}
-    url: ${TELEPHONE_DATASOURCE_URL}
-    username: ${TELEPHONE_DATASOURCE_USERNAME}
   liquibase:
-    drop-first: true
     password: ${spring.datasource.password}
     url: ${spring.datasource.url}
     user: ${spring.datasource.username}
@@ -34,10 +28,3 @@ spring:
   mvc:
     problemdetails:
       enabled: true
-
-springdoc:
-  api-docs:
-    path: "/docs/api/v1/telephone"
-  swagger-ui:
-    path: "/docs/index.html"
-  packages-to-scan: br.com.fechaki.telephone.controller

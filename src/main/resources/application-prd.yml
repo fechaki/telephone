@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    password: ${TELEPHONE_DATASOURCE_PASSWORD_PRD}
+    url: ${TELEPHONE_DATASOURCE_URL_PRD}
+    username: ${TELEPHONE_DATASOURCE_USERNAME_PRD}
