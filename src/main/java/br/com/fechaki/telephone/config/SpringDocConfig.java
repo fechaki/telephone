@@ -27,10 +27,10 @@ public class SpringDocConfig {
 
     private List<Server> getServers() {
         Server local = new Server()
-                .url("http://localhost:3780/api/v1/carte")
+                .url("http://localhost:3700")
                 .description("Local Environment");
         Server uat = new Server()
-                .url("https://uat.api.fechaki.com.br/v1/carte")
+                .url("https://uat.api.fechaki.com.br")
                 .description("UAT Environment");
         return List.of(local, uat);
     }
