@@ -36,7 +36,8 @@ import java.lang.annotation.Target;
         @Parameter(
             name = "phoneNumber",
             description = "Telephone Number",
-            required = true
+            required = true,
+            example = "966666666"
         )
     },
     responses = {
