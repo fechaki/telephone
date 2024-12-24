@@ -7,9 +7,12 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.servers.Server;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.utils.SpringDocUtils;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.ProblemDetail;
+import org.springframework.web.ErrorResponse;
 
 import java.util.List;
 
@@ -55,6 +58,7 @@ public class SpringDocConfig {
     public OpenAPI fechakiTelephoneOpenAPI() {
         Info info = getInfo();
         info.contact(getContact());
+        SpringDocUtils.getConfig().replaceWithClass(ErrorResponse.class, ProblemDetail.class);
         return new OpenAPI()
                 .info(info)
                 .servers(getServers())
