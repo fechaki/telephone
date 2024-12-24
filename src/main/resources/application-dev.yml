@@ -16,8 +16,5 @@ spring:
     drop-first: true
 
 springdoc:
-  api-docs:
-    path: /docs/api/v1/telephone
   swagger-ui:
     path: /docs/index.html
-  packages-to-scan: br.com.fechaki.telephone.controller
