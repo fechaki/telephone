@@ -1,4 +1,4 @@
-package br.com.fechaki.telephone.controller;
+package br.com.fechaki.telephone.v1.controller;
 
 import br.com.fechaki.telephone.docs.TelephoneV1Create;
 import br.com.fechaki.telephone.docs.TelephoneV1DeleteById;
@@ -26,11 +26,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping("/api/v1/telephone")
-public class TelephoneV1Controller {
+public class TelephoneController {
     private final TelephoneMapper mapper;
     private final TelephoneService service;
 
-    public TelephoneV1Controller(TelephoneService service) {
+    public TelephoneController(TelephoneService service) {
         this.service = service;
         this.mapper = Mappers.getMapper(TelephoneMapper.class);
     }
