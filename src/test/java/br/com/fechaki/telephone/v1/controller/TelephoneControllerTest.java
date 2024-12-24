@@ -1,4 +1,4 @@
-package br.com.fechaki.telephone.controller;
+package br.com.fechaki.telephone.v1.controller;
 
 import br.com.fechaki.telephone.TestcontainersConfiguration;
 import br.com.fechaki.telephone.v1.data.entity.TelephoneEntity;
@@ -27,7 +27,7 @@ import static org.springframework.http.HttpMethod.DELETE;
 @Import(value = {TestcontainersConfiguration.class, TelephoneServiceImpl.class})
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class TelephoneV1ControllerTest {
+class TelephoneControllerTest {
     @LocalServerPort
     int port;
 
