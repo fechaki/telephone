@@ -1,10 +1,10 @@
 package br.com.fechaki.telephone.docs;
 
-import br.com.fechaki.telephone.exception.type.DuplicateTelephoneException;
 import br.com.fechaki.telephone.v1.data.request.TelephoneRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -36,7 +36,7 @@ import java.lang.annotation.Target;
         @ApiResponse(
             responseCode = "400",
             description = "Telephone already registered",
-            content = @Content(schema = @Schema(implementation = DuplicateTelephoneException.class))
+            content = @Content(examples = {@ExampleObject(value = "{\n\t\"type\": \"string\",\n\t\"title\": \"string\",\n\t\"status\": 0,\n\t\"detail\": \"string\",\n\t\"instance\": \"string\",\n\t\"errorMessageType\": \"string\",\n\t\"timestamp\": \"string\"\n}")})
        )
     }
 )

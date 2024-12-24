@@ -1,9 +1,9 @@
 package br.com.fechaki.telephone.docs;
 
-import br.com.fechaki.telephone.exception.type.TelephoneNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
@@ -36,7 +36,7 @@ import java.lang.annotation.Target;
         @ApiResponse(
             responseCode = "404",
             description = "Telephone Not Exist",
-            content = @Content(schema = @Schema(implementation = TelephoneNotFoundException.class))
+            content = @Content(examples = {@ExampleObject(value = "{\n\t\"type\": \"string\",\n\t\"title\": \"string\",\n\t\"status\": 0,\n\t\"detail\": \"string\",\n\t\"instance\": \"string\",\n\t\"errorMessageType\": \"string\",\n\t\"timestamp\": \"string\"\n}")})
         )
     }
 )
