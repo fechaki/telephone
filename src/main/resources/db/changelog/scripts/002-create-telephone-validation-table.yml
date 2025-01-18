@@ -1,0 +1,80 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-telephone-table
+      author: Rafael Bandeira
+      changes:
+        - createTable:
+            tableName: tbl_telephone_validation
+            columns:
+              - column:
+                  name: telephone_id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: valid
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone_number
+                  type: varchar(25)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: local_format
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: international_format
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: country_prefix
+                  type: varchar(8)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: country_code
+                  type: varchar(4)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: country_name
+                  type: varchar(160)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: location
+                  type: varchar(60)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: carrier
+                  type: varchar(80)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: line_type
+                  type: varchar(25)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+        - addUniqueConstraint:
+            constraintName: cnt_unique_telephone_validation
+            tableName: tbl_telephone_validation
+            columnNames: telephone_id, created
+        - addForeignKeyConstraint:
+            constraintName: fk_telephone
+            baseColumnNames: telephone_id
+            baseTableName: tbl_telephone_validation
+            referencedColumnNames: telephone_id
+            referencedTableName: tbl_telephone
