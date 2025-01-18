@@ -13,3 +13,11 @@ spring:
 springdoc:
   swagger-ui:
     path: /docs/index.html
+
+fechaki:
+  telephone:
+    validation:
+      access-key: ${TELEPHONE_NUMVERIFY_ACCESS_KEY_UAT}
+      until-days: 2
+    queue:
+      name: fechaki.uat.telephone.validation

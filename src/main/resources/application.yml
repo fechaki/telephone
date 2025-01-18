@@ -14,6 +14,7 @@ server:
   netty:
     connection-timeout: 3s
     idle-timeout: 15s
+  port: 3700
 
 spring:
   application:
@@ -22,9 +23,23 @@ spring:
     password: ${spring.datasource.password}
     url: ${spring.datasource.url}
     user: ${spring.datasource.username}
+    contexts: ${spring.profiles.active}
   main:
     banner-mode: off
     register-shutdown-hook: true
   mvc:
     problemdetails:
       enabled: true
+  rabbitmq:
+    listener:
+      direct:
+        retry:
+          enabled: true
+
+fechaki:
+  telephone:
+    validation:
+      url: http://apilayer.net
+      country-code: BR
+      format: 1
+      until-days: 90

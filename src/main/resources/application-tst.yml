@@ -1,9 +1,3 @@
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info,openapi,swagger-ui
-
 spring:
   datasource:
     password: ${TELEPHONE_DATASOURCE_PASSWORD}
@@ -15,9 +9,6 @@ spring:
     password: ${TELEPHONE_RABBITMQ_PASSWORD}
     username: ${TELEPHONE_RABBITMQ_USERNAME}
 
-springdoc:
-  swagger-ui:
-    path: /docs/index.html
 
 fechaki:
   telephone:
@@ -25,4 +16,4 @@ fechaki:
       access-key: ${TELEPHONE_NUMVERIFY_ACCESS_KEY}
       until-days: 1
     queue:
-      name: fechaki.dev.telephone.validation
+      name: fechaki.tst.telephone.validation

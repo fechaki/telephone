@@ -3,3 +3,10 @@ spring:
     password: ${TELEPHONE_DATASOURCE_PASSWORD_PRD}
     url: ${TELEPHONE_DATASOURCE_URL_PRD}
     username: ${TELEPHONE_DATASOURCE_USERNAME_PRD}
+
+fechaki:
+  telephone:
+    validation:
+      access-key: ${TELEPHONE_NUMVERIFY_ACCESS_KEY_PRD}
+    queue:
+      name: fechaki.prd.telephone.validation
