@@ -1,6 +1,7 @@
 package br.com.fechaki.telephone.v1.mapper;
 
 import br.com.fechaki.telephone.v1.data.entity.TelephoneEntity;
+import br.com.fechaki.telephone.v1.data.message.TelephoneMessageRequest;
 import br.com.fechaki.telephone.v1.data.request.TelephoneRequest;
 import br.com.fechaki.telephone.v1.data.response.TelephoneResponse;
 import org.junit.jupiter.api.DisplayName;
@@ -62,6 +63,34 @@ class TelephoneMapperTest {
     @DisplayName("Mapper Null Entity to Response")
     void toResponseNull() {
         TelephoneResponse response = mapper.toResponse(null);
+        assertNull(response);
+    }
+
+    @Test
+    @DisplayName("Mapper Entity to Message Request")
+    void toMessageRequest() {
+        UUID uuid = UUID.randomUUID();
+        TelephoneEntity entity = new TelephoneEntity(uuid, "55", "21", "988888888", Boolean.TRUE, null, false, LocalDateTime.now(), LocalDateTime.now());
+        TelephoneMessageRequest response = mapper.toMessageRequest(entity);
+        assertNotNull(response);
+        assertEquals(uuid, entity.getTelephoneId());
+        assertEquals("21988888888", response.phoneNumber());
+    }
+
+    @Test
+    @DisplayName("Mapper Entity to Message Request Null ID")
+    void toMessageRequestNullId() {
+        TelephoneEntity entity = new TelephoneEntity(null, "55", "21", "988888888", Boolean.TRUE, null, false, LocalDateTime.now(), LocalDateTime.now());
+        TelephoneMessageRequest response = mapper.toMessageRequest(entity);
+        assertNotNull(response);
+        assertNull(entity.getTelephoneId());
+        assertEquals("21988888888", response.phoneNumber());
+    }
+
+    @Test
+    @DisplayName("Mapper Null Entity to Message Request")
+    void toMessageRequestNull() {
+        TelephoneMessageRequest response = mapper.toMessageRequest(null);
         assertNull(response);
     }
 }
