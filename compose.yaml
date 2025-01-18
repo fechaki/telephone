@@ -1,9 +1,17 @@
 services:
   postgres:
-    image: 'postgres:latest'
+    image: 'postgres:17.2'
     environment:
       - 'POSTGRES_DB=telephonedb'
-      - 'POSTGRES_PASSWORD=s3cr3t'
-      - 'POSTGRES_USER=user'
+      - 'POSTGRES_PASSWORD=${TELEPHONE_DATASOURCE_PASSWORD}'
+      - 'POSTGRES_USER=${TELEPHONE_DATASOURCE_USERNAME}'
     ports:
       - '5432:5432'
+  rabbitmq:
+    image: 'rabbitmq:4.0.5-management'
+    environment:
+      - 'RABBITMQ_DEFAULT_PASS=${TELEPHONE_RABBITMQ_PASSWORD}'
+      - 'RABBITMQ_DEFAULT_USER=${TELEPHONE_RABBITMQ_USERNAME}'
+    ports:
+      - '5672:5672'
+      - '15672:15672'

@@ -6,6 +6,7 @@ import br.com.fechaki.telephone.exception.type.TelephoneNotFoundException;
 import br.com.fechaki.telephone.repository.TelephoneRepository;
 import br.com.fechaki.telephone.v1.data.entity.TelephoneEntity;
 import br.com.fechaki.telephone.v1.service.TelephoneService;
+import br.com.fechaki.telephone.v1.service.TelephoneValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -16,11 +17,14 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class TelephoneServiceImpl implements TelephoneService {
     private final TelephoneRepository repository;
+    private final TelephoneValidationService validationService;
 
     @Override
     public TelephoneEntity create(TelephoneEntity entity) {
         try {
-            return repository.save(entity);
+            TelephoneEntity result = repository.save(entity);
+            validationService.addQueueValidation(result);
+            return result;
         }
         catch (DuplicateKeyException ex) {
             throw new DuplicateTelephoneException(entity.getCountryCode(), entity.getAreaCode(), entity.getPhoneNumber());
