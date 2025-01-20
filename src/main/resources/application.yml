@@ -9,28 +9,37 @@ management:
       enabled: true
 
 server:
-  port: 3700
   shutdown: graceful
   server-header: "Fechaki Telephone API"
   netty:
     connection-timeout: 3s
     idle-timeout: 15s
+  port: 3700
 
 spring:
   application:
     name: telephone
-  datasource:
-    password: ${TELEPHONE_DATASOURCE_PASSWORD}
-    url: ${TELEPHONE_DATASOURCE_URL}
-    username: ${TELEPHONE_DATASOURCE_USERNAME}
   liquibase:
-    drop-first: true
     password: ${spring.datasource.password}
     url: ${spring.datasource.url}
     user: ${spring.datasource.username}
+    contexts: ${spring.profiles.active}
   main:
     banner-mode: off
     register-shutdown-hook: true
   mvc:
     problemdetails:
       enabled: true
+  rabbitmq:
+    listener:
+      direct:
+        retry:
+          enabled: true
+
+fechaki:
+  telephone:
+    validation:
+      url: http://apilayer.net
+      country-code: BR
+      format: 1
+      until-days: 90

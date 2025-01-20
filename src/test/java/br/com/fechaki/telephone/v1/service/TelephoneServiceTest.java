@@ -26,6 +26,9 @@ class TelephoneServiceTest {
     @Mock
     private TelephoneRepository repository;
 
+    @Mock
+    private TelephoneValidationService validationService;
+
     @InjectMocks
     private TelephoneServiceImpl service;
 
@@ -34,7 +37,7 @@ class TelephoneServiceTest {
     void create() {
         TelephoneEntity entity = new TelephoneEntity(UUID.randomUUID(), "55", "21", "988888888", Boolean.TRUE, null, false, LocalDateTime.now(), LocalDateTime.now());
         when(repository.save(any(TelephoneEntity.class))).thenReturn(entity);
-
+        doNothing().when(validationService).addQueueValidation(any(TelephoneEntity.class));
         TelephoneEntity result = service.create(entity);
 
         assertNotNull(result);
@@ -52,9 +55,10 @@ class TelephoneServiceTest {
     @Test
     @DisplayName("Duplicated Telephone Exception")
     void createWithException() {
+        TelephoneEntity entity = new TelephoneEntity();
         when(repository.save(any(TelephoneEntity.class))).thenThrow(DuplicateKeyException.class);
 
-        DuplicateTelephoneException exception = assertThrows(DuplicateTelephoneException.class, () -> service.create(new TelephoneEntity()));
+        DuplicateTelephoneException exception = assertThrows(DuplicateTelephoneException.class, () -> service.create(entity));
         assertNotNull(exception);
     }
 
@@ -71,18 +75,20 @@ class TelephoneServiceTest {
     @Test
     @DisplayName("Read Telephone by Id Exception")
     void readByIdWithException() {
+        String id = UUID.randomUUID().toString();
         doThrow(new TelephoneNotFoundException(UUID.randomUUID().toString())).when(repository).findFirstByTelephoneIdAndDeletedFalse(any(UUID.class));
 
-        TelephoneNotFoundException exception = assertThrows(TelephoneNotFoundException.class, () -> service.read(UUID.randomUUID().toString()));
+        TelephoneNotFoundException exception = assertThrows(TelephoneNotFoundException.class, () -> service.read(id));
         assertNotNull(exception);
     }
 
     @Test
     @DisplayName("Read Telephone by Id Exception Null Entity")
     void readByIdWithNullException() {
+        String id = UUID.randomUUID().toString();
         when(repository.findFirstByTelephoneIdAndDeletedFalse(any(UUID.class))).thenReturn(null);
 
-        TelephoneNotFoundException exception = assertThrows(TelephoneNotFoundException.class, () -> service.read(UUID.randomUUID().toString()));
+        TelephoneNotFoundException exception = assertThrows(TelephoneNotFoundException.class, () -> service.read(id));
         assertNotNull(exception);
     }
 
@@ -126,19 +132,21 @@ class TelephoneServiceTest {
     @Test
     @DisplayName("Delete Telephone Not Exist Exception")
     void deleteWithException() {
+        String id = UUID.randomUUID().toString();
         when(repository.existsById(Mockito.any(UUID.class))).thenReturn(false);
 
-        TelephoneNotExistException exception = assertThrows(TelephoneNotExistException.class, () -> service.delete(UUID.randomUUID().toString()));
+        TelephoneNotExistException exception = assertThrows(TelephoneNotExistException.class, () -> service.delete(id));
         assertNotNull(exception);
     }
 
     @Test
     @DisplayName("Delete Telephone Exist but with Exception")
     void deleteWithNotExistException() {
+        String id = UUID.randomUUID().toString();
         when(repository.existsById(Mockito.any(UUID.class))).thenReturn(true);
         doThrow(new TelephoneNotExistException(UUID.randomUUID().toString())).when(repository).deleteById(any(UUID.class));
 
-        TelephoneNotExistException exception = assertThrows(TelephoneNotExistException.class, () -> service.delete(UUID.randomUUID().toString()));
+        TelephoneNotExistException exception = assertThrows(TelephoneNotExistException.class, () -> service.delete(id));
         assertNotNull(exception);
     }
 }

@@ -1,0 +1,90 @@
+databaseChangeLog:
+  - changeSet:
+      id: Data for Developer Test
+      author: Rafael Bandeira
+      context: tst
+      changes:
+        - insert:
+            tableName: tbl_telephone
+            columns:
+              - column:
+                  name: telephone_id
+                  value: 6031dff8-2cd4-4dc7-b3b7-0d0a8b1d4ee8
+              - column:
+                  name: country_code
+                  value: "55"
+              - column:
+                  name: area_code
+                  value: "21"
+              - column:
+                  name: phone_number
+                  value: "999999999"
+              - column:
+                  name: validated
+                  value: "1"
+              - column:
+                  name: activated
+                  value: "1"
+        - insert:
+            tableName: tbl_telephone
+            columns:
+              - column:
+                  name: country_code
+                  value: "55"
+              - column:
+                  name: area_code
+                  value: "21"
+              - column:
+                  name: phone_number
+                  value: "988888888"
+        - insert:
+            tableName: tbl_telephone
+            columns:
+              - column:
+                  name: country_code
+                  value: "55"
+              - column:
+                  name: area_code
+                  value: "21"
+              - column:
+                  name: phone_number
+                  value: "977777777"
+              - column:
+                  name: validated
+                  value: "1"
+              - column:
+                  name: activated
+                  value: "0"
+        - insert:
+            tableName: tbl_telephone
+            columns:
+              - column:
+                  name: country_code
+                  value: "55"
+              - column:
+                  name: area_code
+                  value: "21"
+              - column:
+                  name: phone_number
+                  value: "966666666"
+              - column:
+                  name: validated
+                  value: "0"
+              - column:
+                  name: activated
+                  value: "1"
+        - insert:
+            tableName: tbl_telephone
+            columns:
+              - column:
+                  name: country_code
+                  value: "55"
+              - column:
+                  name: area_code
+                  value: "21"
+              - column:
+                  name: phone_number
+                  value: "955555555"
+              - column:
+                  name: deleted
+                  value: "1"

@@ -1,0 +1,23 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,openapi,swagger-ui
+
+spring:
+  datasource:
+    password: ${TELEPHONE_DATASOURCE_PASSWORD_UAT}
+    url: ${TELEPHONE_DATASOURCE_URL_UAT}
+    username: ${TELEPHONE_DATASOURCE_USERNAME_UAT}
+
+springdoc:
+  swagger-ui:
+    path: /docs/index.html
+
+fechaki:
+  telephone:
+    validation:
+      access-key: ${TELEPHONE_NUMVERIFY_ACCESS_KEY_UAT}
+      until-days: 2
+    queue:
+      name: fechaki.uat.telephone.validation

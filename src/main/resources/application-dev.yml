@@ -1,0 +1,28 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,openapi,swagger-ui
+
+spring:
+  datasource:
+    password: ${TELEPHONE_DATASOURCE_PASSWORD}
+    url: ${TELEPHONE_DATASOURCE_URL}
+    username: ${TELEPHONE_DATASOURCE_USERNAME}
+  liquibase:
+    drop-first: true
+  rabbitmq:
+    password: ${TELEPHONE_RABBITMQ_PASSWORD}
+    username: ${TELEPHONE_RABBITMQ_USERNAME}
+
+springdoc:
+  swagger-ui:
+    path: /docs/index.html
+
+fechaki:
+  telephone:
+    validation:
+      access-key: ${TELEPHONE_NUMVERIFY_ACCESS_KEY}
+      until-days: 1
+    queue:
+      name: fechaki.dev.telephone.validation

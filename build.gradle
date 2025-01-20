@@ -1,15 +1,15 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.3.4'
+    id 'org.springframework.boot' version '3.4.0'
     id 'io.spring.dependency-management' version '1.1.6'
-    id 'org.hibernate.orm' version '6.5.3.Final'
+    id 'org.hibernate.orm' version '6.6.3.Final'
     id 'org.graalvm.buildtools.native' version '0.10.3'
     id 'org.springframework.cloud.contract' version '4.1.4'
-    id 'com.gorylenko.gradle-git-properties' version '2.4.1'
+    id 'com.gorylenko.gradle-git-properties' version '2.4.2'
 }
 
 group = 'br.com.fechaki'
-version = '0.0.1-SNAPSHOT'
+version = '0.1.0-SNAPSHOT'
 
 java {
     toolchain {
@@ -28,15 +28,22 @@ repositories {
 }
 
 ext {
-    set('springCloudVersion', "2023.0.3")
-    set('mapstructVersion', "1.5.5.Final")
+    set('mapstructVersion', "1.6.3")
     set('lombokMapstructBindingVersion', "0.2.0")
+    set('springdocVersion', "2.7.0")
+}
+
+springBoot {
+    buildInfo()
 }
 
 dependencies {
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-api:${springdocVersion}"
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springdocVersion}"
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation "org.mapstruct:mapstruct:${mapstructVersion}"
     implementation 'org.liquibase:liquibase-core'
@@ -57,8 +64,10 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.amqp:spring-rabbit-test'
     testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.testcontainers:postgresql'
+    testImplementation 'org.testcontainers:rabbitmq'
 
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
