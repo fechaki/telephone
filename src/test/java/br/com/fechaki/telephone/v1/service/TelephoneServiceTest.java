@@ -121,6 +121,38 @@ class TelephoneServiceTest {
     }
 
     @Test
+    @DisplayName("Update Telephone")
+    void update() {
+        UUID telephoneId = UUID.randomUUID();
+        TelephoneEntity entity = new TelephoneEntity(telephoneId, "55", "21", "988888888", Boolean.TRUE, null, false, LocalDateTime.now(), LocalDateTime.now());
+        when(repository.existsById(Mockito.any(UUID.class))).thenReturn(true);
+        when(repository.save(any(TelephoneEntity.class))).thenReturn(entity);
+
+        assertDoesNotThrow(() -> service.update(entity));
+    }
+
+    @Test
+    @DisplayName("Update Telephone Wrong ID")
+    void updateWrongID() {
+        UUID telephoneId = UUID.randomUUID();
+        TelephoneEntity entity = new TelephoneEntity(telephoneId, "55", "21", "988888888", Boolean.TRUE, null, false, LocalDateTime.now(), LocalDateTime.now());
+        when(repository.existsById(Mockito.any(UUID.class))).thenReturn(false);
+
+        TelephoneNotExistException exception = assertThrows(TelephoneNotExistException.class, () -> service.update(entity));
+        assertNotNull(exception);
+    }
+
+    @Test
+    @DisplayName("Update Telephone Exception")
+    void updateException() {
+        UUID telephoneId = UUID.randomUUID();
+        TelephoneEntity entity = new TelephoneEntity(telephoneId, "55", "21", "988888888", Boolean.TRUE, null, false, LocalDateTime.now(), LocalDateTime.now());
+
+        TelephoneNotExistException exception = assertThrows(TelephoneNotExistException.class, () -> service.update(entity));
+        assertNotNull(exception);
+    }
+
+    @Test
     @DisplayName("Delete Telephone")
     void delete() {
         when(repository.existsById(Mockito.any(UUID.class))).thenReturn(true);

@@ -3,6 +3,7 @@ package br.com.fechaki.telephone.v1.queue;
 import br.com.fechaki.telephone.client.ValidationClient;
 import br.com.fechaki.telephone.client.data.response.ClientValidationResponse;
 import br.com.fechaki.telephone.v1.data.message.TelephoneMessageRequest;
+import br.com.fechaki.telephone.v1.data.message.TelephoneStatusUpdaterMessageRequest;
 import br.com.fechaki.telephone.v1.queue.impl.TelephoneValidatorConsumerImpl;
 import br.com.fechaki.telephone.v1.service.TelephoneValidationService;
 import org.junit.jupiter.api.DisplayName;
@@ -30,6 +31,9 @@ class TelephoneValidatorConsumerTest {
     @Mock
     TelephoneValidationService telephoneValidationService;
 
+    @Mock
+    TelephoneUpdaterProducer telephoneUpdaterProducer;
+
     @InjectMocks
     private TelephoneValidatorConsumerImpl consumer;
 
@@ -46,7 +50,7 @@ class TelephoneValidatorConsumerTest {
         when(telephoneValidationService.isValidationNeeded(anyString())).thenReturn(true);
         when(validationClient.validate(anyString(), anyString(), anyString(), anyString())).thenReturn(response);
         doNothing().when(telephoneValidationService).saveValidation(anyString(), any(ClientValidationResponse.class));
-
+        doNothing().when(telephoneUpdaterProducer).sendMessage(any(TelephoneStatusUpdaterMessageRequest.class));
         assertDoesNotThrow(() -> consumer.receiveMessage(request));
     }
 
