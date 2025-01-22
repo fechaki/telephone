@@ -16,4 +16,7 @@ fechaki:
       access-key: ${TELEPHONE_NUMVERIFY_ACCESS_KEY}
       until-days: 1
     queue:
-      name: fechaki.tst.telephone.validation
+        validator:
+          name: fechaki.tst.telephone.validation
+        updater:
+          name: fechaki.tst.telephone.updater
