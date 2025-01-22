@@ -4,6 +4,8 @@ import br.com.fechaki.telephone.client.ValidationClient;
 import br.com.fechaki.telephone.client.data.request.ClientValidationRequest;
 import br.com.fechaki.telephone.client.data.response.ClientValidationResponse;
 import br.com.fechaki.telephone.v1.data.message.TelephoneMessageRequest;
+import br.com.fechaki.telephone.v1.data.message.TelephoneStatusUpdaterMessageRequest;
+import br.com.fechaki.telephone.v1.queue.TelephoneUpdaterProducer;
 import br.com.fechaki.telephone.v1.queue.TelephoneValidatorConsumer;
 import br.com.fechaki.telephone.v1.service.TelephoneValidationService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Component;
 public class TelephoneValidatorConsumerImpl implements TelephoneValidatorConsumer {
     private final ValidationClient validationClient;
     private final TelephoneValidationService telephoneValidationService;
+    private final TelephoneUpdaterProducer telephoneUpdaterProducer;
 
     @Value("${fechaki.telephone.validation.access-key}")
     private String accessKey;
@@ -36,6 +39,7 @@ public class TelephoneValidatorConsumerImpl implements TelephoneValidatorConsume
 
             if(response.number() != null) {
                 telephoneValidationService.saveValidation(request.telephoneId(), response);
+                updateTelephoneStatus(request.telephoneId(), response.valid());
             }
             else {
                 log.error("Validation API Call Error (Null Telephone ID): {}", request.phoneNumber());
@@ -44,6 +48,15 @@ public class TelephoneValidatorConsumerImpl implements TelephoneValidatorConsume
         else {
             log.info("Validation API call not Needed: {}", request.telephoneId());
         }
+    }
+
+    private void updateTelephoneStatus(String telephoneId, Boolean validated) {
+        TelephoneStatusUpdaterMessageRequest messageRequest = new TelephoneStatusUpdaterMessageRequest(
+                telephoneId,
+                Boolean.TRUE,
+                validated
+        );
+        telephoneUpdaterProducer.sendMessage(messageRequest);
     }
 
     private ClientValidationResponse doValidation(ClientValidationRequest request) {
