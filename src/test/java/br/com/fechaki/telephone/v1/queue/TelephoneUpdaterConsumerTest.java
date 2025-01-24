@@ -40,4 +40,14 @@ class TelephoneUpdaterConsumerTest {
 
         assertDoesNotThrow(() -> telephoneUpdaterConsumer.receiveMessage(message));
     }
+
+    @Test
+    @DisplayName("Test Telephone Status Null Entity")
+    void receiveMessageNullEntity() {
+        UUID uuid = UUID.randomUUID();
+        TelephoneStatusUpdaterMessageRequest message = new TelephoneStatusUpdaterMessageRequest(uuid.toString(), true, true);
+
+        when(telephoneService.read(anyString())).thenReturn(null);
+        assertDoesNotThrow(() -> telephoneUpdaterConsumer.receiveMessage(message));
+    }
 }
