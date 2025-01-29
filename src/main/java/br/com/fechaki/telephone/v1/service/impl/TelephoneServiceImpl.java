@@ -50,6 +50,20 @@ public class TelephoneServiceImpl implements TelephoneService {
     }
 
     @Override
+    public void update(TelephoneEntity entity) {
+        UUID id = entity.getTelephoneId();
+        try {
+            if(!repository.existsById(id)) {
+                throw new TelephoneNotExistException(id);
+            }
+            repository.save(entity);
+        }
+        catch (Exception ex) {
+            throw new TelephoneNotExistException(id);
+        }
+    }
+
+    @Override
     public void delete(String id) {
         boolean result = repository.existsById(UUID.fromString(id));
         if(!result) {

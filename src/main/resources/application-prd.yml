@@ -9,4 +9,7 @@ fechaki:
     validation:
       access-key: ${TELEPHONE_NUMVERIFY_ACCESS_KEY_PRD}
     queue:
-      name: fechaki.prd.telephone.validation
+      validator:
+        name: fechaki.prd.telephone.validation
+      updater:
+        name: fechaki.prd.telephone.updater

@@ -14,12 +14,20 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfig {
-    @Value("${fechaki.telephone.queue.name}")
-    private String queueName;
+    @Value("${fechaki.telephone.queue.validator.name}")
+    private String validatorQueueName;
+
+    @Value("${fechaki.telephone.queue.updater.name}")
+    private String updaterQueueName;
 
     @Bean
-    Queue queue() {
-        return new Queue(queueName, false);
+    Queue validationQueue() {
+        return new Queue(validatorQueueName, false);
+    }
+
+    @Bean
+    Queue updaterQueue() {
+        return new Queue(updaterQueueName, false);
     }
 
     @Bean
