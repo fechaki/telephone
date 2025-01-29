@@ -6,5 +6,6 @@ public interface TelephoneService {
     TelephoneEntity create(TelephoneEntity entity);
     TelephoneEntity read(String id);
     TelephoneEntity read(String countryCode, String areaCoda, String phoneNumber);
+    void update(TelephoneEntity entity);
     void delete(String id);
 }
