@@ -43,6 +43,7 @@ class TelephoneValidatorConsumerTest {
         ReflectionTestUtils.setField(consumer, "accessKey", "ACCESS_KEY");
         ReflectionTestUtils.setField(consumer, "format", "1");
         ReflectionTestUtils.setField(consumer, "countryCode", "BR");
+        ReflectionTestUtils.setField(consumer, "validationEnabled", true);
 
         TelephoneMessageRequest request = new TelephoneMessageRequest(UUID.randomUUID().toString(), "21999999999");
         ClientValidationResponse response = new ClientValidationResponse(true, request.phoneNumber(), "0, 55XX" + request.phoneNumber(), "55" + request.phoneNumber(), "+55", "BR", "Brazil (Republic federative, of)", "Rio de Janeiro, Brazil", "Vivo", "MOBILE");
@@ -60,6 +61,7 @@ class TelephoneValidatorConsumerTest {
         ReflectionTestUtils.setField(consumer, "accessKey", "ACCESS_KEY");
         ReflectionTestUtils.setField(consumer, "format", "1");
         ReflectionTestUtils.setField(consumer, "countryCode", "BR");
+        ReflectionTestUtils.setField(consumer, "validationEnabled", true);
 
         TelephoneMessageRequest request = new TelephoneMessageRequest(UUID.randomUUID().toString(), "21999999999");
         ClientValidationResponse response = new ClientValidationResponse(true, null, "0, 55XX" + request.phoneNumber(), "55" + request.phoneNumber(), "+55", "BR", "Brazil (Republic federative, of)", "Rio de Janeiro, Brazil", "Vivo", "MOBILE");

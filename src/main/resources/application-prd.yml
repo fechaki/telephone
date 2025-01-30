@@ -8,6 +8,7 @@ fechaki:
   telephone:
     validation:
       access-key: ${TELEPHONE_NUMVERIFY_ACCESS_KEY_PRD}
+      enabled: true
     queue:
       validator:
         name: fechaki.prd.telephone.validation

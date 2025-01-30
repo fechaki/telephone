@@ -24,6 +24,9 @@ public class TelephoneValidatorConsumerImpl implements TelephoneValidatorConsume
     @Value("${fechaki.telephone.validation.access-key}")
     private String accessKey;
 
+    @Value("${fechaki.telephone.validation.enabled}")
+    private boolean validationEnabled;
+
     @Value("${fechaki.telephone.validation.format}")
     private String format;
 
@@ -60,6 +63,9 @@ public class TelephoneValidatorConsumerImpl implements TelephoneValidatorConsume
     }
 
     private ClientValidationResponse doValidation(ClientValidationRequest request) {
-        return validationClient.validate(accessKey, request.number(), request.countryCode(), request.format());
+        if(validationEnabled)
+            return validationClient.validate(accessKey, request.number(), request.countryCode(), request.format());
+        else
+            return new ClientValidationResponse(true, request.number(), "-", "-", "-", "-", "-", "-", "-", "Mobile");
     }
 }

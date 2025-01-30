@@ -43,3 +43,4 @@ fechaki:
       country-code: BR
       format: 1
       until-days: 90
+      enabled: false
