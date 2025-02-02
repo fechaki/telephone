@@ -1,6 +1,6 @@
 package br.com.fechaki.telephone.client.data.response;
 
-public record ClientValidationResponse(
+public record ClientEnrichmentResponse(
     boolean valid,
     String number,
     String local_format,

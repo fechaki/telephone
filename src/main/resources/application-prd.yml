@@ -6,10 +6,13 @@ spring:
 
 fechaki:
   telephone:
-    validation:
+    enrichment:
       access-key: ${TELEPHONE_NUMVERIFY_ACCESS_KEY_PRD}
+      enabled: true
+    validation:
+      enabled: true
     queue:
-      validator:
-        name: fechaki.prd.telephone.validation
+      enrichment:
+        name: fechaki.prd.telephone.enrichment
       updater:
         name: fechaki.prd.telephone.updater

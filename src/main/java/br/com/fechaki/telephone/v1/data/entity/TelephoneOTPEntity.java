@@ -15,20 +15,12 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "tbl_telephone_validation")
-@EqualsAndHashCode(of = {"telephoneId", "internationalFormat", "created"})
-public class TelephoneValidationEntity {
+@Table(name = "tbl_telephone_otp")
+@EqualsAndHashCode(of = {"telephoneId", "otpToken", "created"})
+public class TelephoneOTPEntity {
     @Id
     private UUID telephoneId;
-    private boolean valid;
-    private String phoneNumber;
-    private String localFormat;
-    private String internationalFormat;
-    private String countryPrefix;
-    private String countryCode;
-    private String countryName;
-    private String location;
-    private String carrier;
-    private String lineType;
+    private boolean validated;
+    private String otpToken;
     private LocalDateTime created = LocalDateTime.now();
 }

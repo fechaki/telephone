@@ -21,11 +21,11 @@ springdoc:
 
 fechaki:
   telephone:
-    validation:
+    enrichment:
       access-key: ${TELEPHONE_NUMVERIFY_ACCESS_KEY}
       until-days: 1
     queue:
-      validator:
-        name: fechaki.dev.telephone.validation
+      enrichment:
+        name: fechaki.dev.telephone.enrichment
       updater:
         name: fechaki.dev.telephone.updater

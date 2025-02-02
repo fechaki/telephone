@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: 001-create-telephone-table
+      id: 002-create-telephone-enrichment-table
       author: Rafael Bandeira
       changes:
         - createTable:
-            tableName: tbl_telephone_validation
+            tableName: tbl_telephone_enrichment
             columns:
               - column:
                   name: telephone_id
@@ -69,12 +69,12 @@ databaseChangeLog:
                   constraints:
                     nullable: false
         - addUniqueConstraint:
-            constraintName: cnt_unique_telephone_validation
-            tableName: tbl_telephone_validation
+            constraintName: cnt_unique_telephone_enrichment
+            tableName: tbl_telephone_enrichment
             columnNames: telephone_id, created
         - addForeignKeyConstraint:
-            constraintName: fk_telephone
+            constraintName: fk_telephone_enrichment
             baseColumnNames: telephone_id
-            baseTableName: tbl_telephone_validation
+            baseTableName: tbl_telephone_enrichment
             referencedColumnNames: telephone_id
             referencedTableName: tbl_telephone
