@@ -13,8 +13,8 @@ import software.amazon.awssdk.services.sns.SnsClient;
 import software.amazon.awssdk.services.sns.model.PublishRequest;
 import software.amazon.awssdk.services.sns.model.PublishResponse;
 
+import java.security.SecureRandom;
 import java.util.Optional;
-import java.util.Random;
 import java.util.UUID;
 
 @Slf4j
@@ -27,11 +27,11 @@ public class SNSServiceImpl implements SNSService {
     private boolean validationEnabled;
 
     private final SnsClient snsClient;
-    private final Random random;
+    private final SecureRandom random;
 
     public SNSServiceImpl(SnsClient snsClient, TelephoneRepository telephoneRepository, TelephoneOTPRepository otpRepository) {
         this.snsClient = snsClient;
-        this.random = new Random();
+        this.random = new SecureRandom();
         this.telephoneRepository = telephoneRepository;
         this.otpRepository = otpRepository;
     }
