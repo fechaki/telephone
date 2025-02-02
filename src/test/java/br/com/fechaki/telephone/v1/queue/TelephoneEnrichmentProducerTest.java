@@ -2,7 +2,7 @@ package br.com.fechaki.telephone.v1.queue;
 
 import br.com.fechaki.telephone.TestcontainersConfiguration;
 import br.com.fechaki.telephone.v1.data.message.TelephoneMessageRequest;
-import br.com.fechaki.telephone.v1.queue.impl.TelephoneValidatorProducerImpl;
+import br.com.fechaki.telephone.v1.queue.impl.TelephoneEnrichmentProducerImpl;
 import br.com.fechaki.telephone.v1.service.impl.TelephoneServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,13 +25,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Import(value = {TestcontainersConfiguration.class, TelephoneServiceImpl.class})
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class TelephoneValidatorProducerTest {
+class TelephoneEnrichmentProducerTest {
 
     @Autowired
     private RabbitMQContainer rabbitMQContainer;
 
     @Autowired
-    private TelephoneValidatorProducerImpl producer;
+    private TelephoneEnrichmentProducerImpl producer;
 
     @BeforeEach
     void setUp() {
