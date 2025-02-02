@@ -1,0 +1,39 @@
+databaseChangeLog:
+  - changeSet:
+      id: 003-create-telephone-otp-table
+      author: Rafael Bandeira
+      changes:
+        - createTable:
+            tableName: tbl_telephone_otp
+            columns:
+              - column:
+                  name: telephone_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: validated
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: otp_token
+                  type: varchar(6)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+        - addUniqueConstraint:
+            constraintName: cnt_unique_telephone_otp
+            tableName: tbl_telephone_otp
+            columnNames: telephone_id, otp_token, created
+        - addForeignKeyConstraint:
+            constraintName: fk_telephone_otp
+            baseColumnNames: telephone_id
+            baseTableName: tbl_telephone_otp
+            referencedColumnNames: telephone_id
+            referencedTableName: tbl_telephone

@@ -38,9 +38,11 @@ spring:
 
 fechaki:
   telephone:
-    validation:
+    enrichment:
       url: http://apilayer.net
       country-code: BR
       format: 1
       until-days: 90
+      enabled: false
+    validation:
       enabled: false

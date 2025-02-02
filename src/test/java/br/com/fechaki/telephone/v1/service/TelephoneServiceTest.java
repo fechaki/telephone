@@ -27,7 +27,7 @@ class TelephoneServiceTest {
     private TelephoneRepository repository;
 
     @Mock
-    private TelephoneValidationService validationService;
+    private TelephoneEnrichmentService validationService;
 
     @InjectMocks
     private TelephoneServiceImpl service;
@@ -37,7 +37,7 @@ class TelephoneServiceTest {
     void create() {
         TelephoneEntity entity = new TelephoneEntity(UUID.randomUUID(), "55", "21", "988888888", Boolean.TRUE, null, false, LocalDateTime.now(), LocalDateTime.now());
         when(repository.save(any(TelephoneEntity.class))).thenReturn(entity);
-        doNothing().when(validationService).addQueueValidation(any(TelephoneEntity.class));
+        doNothing().when(validationService).addQueueEnrichment(any(TelephoneEntity.class));
         TelephoneEntity result = service.create(entity);
 
         assertNotNull(result);
