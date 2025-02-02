@@ -17,16 +17,17 @@ public class OTPController {
     private final SNSService snsService;
 
     @PostMapping("/{telephoneID}")
-    public void sendValidation(@PathVariable String telephoneID) {
+    public ResponseEntity<Void> sendValidation(@PathVariable String telephoneID) {
         String otpToken = snsService.generateOtp(telephoneID);
         snsService.sendOtp(telephoneID, otpToken);
+        return ResponseEntity.accepted().build();
     }
 
     @PostMapping("/{telephoneID}/validate")
-    public ResponseEntity<Boolean> validate(@PathVariable String telephoneID, @RequestBody TelephoneValidationRequest request) {
+    public ResponseEntity<Void> validate(@PathVariable String telephoneID, @RequestBody TelephoneValidationRequest request) {
         boolean response = snsService.validateOtp(telephoneID, request.otpToken());
         if (response) {
-            return ResponseEntity.ok(true);
+            return ResponseEntity.accepted().build();
         }
         else {
             return ResponseEntity.badRequest().build();
