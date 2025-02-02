@@ -66,6 +66,7 @@ public class TelephoneEnrichmentConsumerImpl implements TelephoneEnrichmentConsu
         if(enrichmentEnabled)
             return validationClient.validate(accessKey, request.number(), request.countryCode(), request.format());
         else
-            return new ClientEnrichmentResponse(true, request.number(), "-", "-", "-", "-", "-", "-", "-", "Mobile");
+            return new ClientEnrichmentResponse(true, "55" + request.number(), "0, 0XX" + request.number(), "+55" + request.number(), "+55", "BR", "Brazil (Federative Republic of)", "Rio de Janeiro RJ", "VIVO Participacoes SA (VIVO)", "mobile");
+
     }
 }
